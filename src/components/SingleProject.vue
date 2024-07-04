@@ -6,7 +6,7 @@
 
     <div class="icons">
       <span class="material-icons"> edit </span>
-      <span class="material-icons"> delete </span>
+      <span class="material-icons" @click="deleteProject"> delete </span>
       <span class="material-icons"> done </span>
     </div>
 
@@ -22,11 +22,20 @@ export default {
   data() {
     return {
       showDetails: false,
+      uri: 'http://localhost:3000/projects/' + this.project.id
     };
   },
   methods: {
     toggleDetails() {
       this.showDetails = !this.showDetails;
+    },
+    deleteProject() {
+      fetch(this.uri, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then(() => this.$emit("delete", this.project.id))
+        .catch((error) => console.error(error));
     },
   },
 };
@@ -46,19 +55,19 @@ h3 {
 }
 
 .action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .material-icons {
-    font-size: 24px;
-    margin-left: 10px;
-    color: #bbb;
-    cursor: pointer;
+  font-size: 24px;
+  margin-left: 10px;
+  color: #bbb;
+  cursor: pointer;
 }
 
 .material-icons:hover {
-    color: #777;
+  color: #777;
 }
 </style>
