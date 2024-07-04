@@ -2,14 +2,15 @@
   <div class="home">
     <div v-if="projects.length">
       <div v-for="project in projects" :key="project.id">
-        <p>{{ project.title }}</p>
+        <SingleProject :project="project" />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import SingleProject from "@/components/SingleProject.vue";
+
 export default {
   name: "Home",
   data() {
@@ -17,7 +18,9 @@ export default {
       projects: [],
     };
   },
-  components: {},
+  components: {
+    SingleProject,
+  },
   mounted() {
     fetch("http://localhost:3000/projects")
       .then((response) => response.json())
