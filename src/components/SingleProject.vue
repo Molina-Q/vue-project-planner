@@ -5,7 +5,9 @@
     </div>
 
     <div class="icons">
-      <span class="material-icons"> edit </span>
+      <router-link :to="{ name: 'editProject', params: { id: project.id }}">
+        <span class="material-icons"> edit </span>
+      </router-link>
       <span class="material-icons" @click="deleteProject"> delete </span>
       <span class="material-icons tick" @click="toggleComplete"> done </span>
     </div>
@@ -46,7 +48,7 @@ export default {
         body: JSON.stringify({ complete: !this.project.complete }), // send the reverse of the current value (send true if false, etc...)
       })
         .then((response) => response.json())
-        .then(() => (this.$emit('complete', this.project.id)))
+        .then(() => this.$emit("complete", this.project.id))
         .catch((error) => console.error(error));
     },
   },
