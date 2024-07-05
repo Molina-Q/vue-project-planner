@@ -1,10 +1,10 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <label for="title" >Title:</label>
+    <label for="title">Title:</label>
     <input type="text" id="title" v-model="title" required />
 
     <label for="details">Details:</label>
-    <textarea id="details" v-models="details" required></textarea>
+    <textarea id="details" v-model="details" required></textarea>
 
     <button>Add project</button>
   </form>
@@ -20,9 +20,21 @@ export default {
   },
   methods: {
     handleSubmit() {
+      let project = {
+        title: this.title,
+        details: this.details,
+        complete: false,
+      };
 
-    }
-  }
+      fetch("http://localhost:3000/projects/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(project),
+      })
+        .then(() => this.$router.push("/"))
+        .catch((err) => (console.log(err)) );
+    },
+  },
 };
 </script>
 
@@ -63,5 +75,4 @@ form button {
   border-radius: 6px;
   font-size: 16px;
 }
-
 </style>
